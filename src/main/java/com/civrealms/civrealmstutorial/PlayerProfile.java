@@ -8,6 +8,15 @@ package com.civrealms.civrealmstutorial;
  *
  * @author crimeo
  */
+
+
 public class PlayerProfile {
+    byte[] triggerHistory;
+    byte tutorialMode;
+    
+    public void PlayerProfile(){
+        tutorialMode = 1;
+        triggerHistory = new byte[100];
+    }
     
 }
