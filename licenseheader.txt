@@ -1,0 +1,8 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}This project is licensed under GPLv3
+${licensePrefix}https://www.gnu.org/licenses/gpl-3.0.html
+<#if licenseLast??>
+${licenseLast}
+</#if>
