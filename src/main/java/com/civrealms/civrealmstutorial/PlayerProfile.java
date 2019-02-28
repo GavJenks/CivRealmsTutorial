@@ -9,10 +9,9 @@ package com.civrealms.civrealmstutorial;
  * @author crimeo
  */
 
-
 public class PlayerProfile {
-    byte[] triggerHistory;
-    byte tutorialMode;
+    public byte[] triggerHistory;
+    public byte tutorialMode;
     
     public void PlayerProfile(){
         tutorialMode = 1;
