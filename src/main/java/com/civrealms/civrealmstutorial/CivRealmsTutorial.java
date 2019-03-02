@@ -26,6 +26,9 @@ public class CivRealmsTutorial extends JavaPlugin {
     public void onDisable() {
 
     }
+    
+    //will want to have some op commands to manually clear out or set things about a profile, especially since no database means we can't do it in sql
+    //need to still add a serialized object save/load, currently the tutorial starts over every restart.
         
     public PlayerProfile getProfile(String UUID){
         return profiles.get(UUID);
