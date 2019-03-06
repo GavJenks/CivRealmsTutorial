@@ -48,13 +48,13 @@ public class CivRealmsTutorialListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onBlockBreak(BlockBreakEvent event){
         String uuid = event.getPlayer().getUniqueId().toString();
+        PlayerProfile profile = findProfile(uuid);
         if (event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2){
             Material handMat = event.getPlayer().getInventory().getItemInMainHand().getType();
             if (handMat != Material.STONE_AXE
                     && handMat != Material.IRON_AXE
                     && handMat != Material.GOLD_AXE
                     && handMat != Material.DIAMOND_AXE){ //fail to chop a log due to wrong tool (not due to citadel, etc.)
-                PlayerProfile profile = findProfile(uuid);
                 if (profile.triggerHistory[0] < 3){ //up to 3 tutorial warnings (only happens when you don't use an axe)
                     event.getPlayer().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " You cannot break trees by hand. Make a primitive axe instead by using the regular minecraft axe recipe but with either bone or flint for the head of the axe. All animals drop bones.");
                     event.getPlayer().sendMessage("");
@@ -65,11 +65,11 @@ public class CivRealmsTutorialListener implements Listener {
         } else if (event.getBlock().getType() == Material.STONE //explain stone breaking inefficiency
                     || event.getBlock().getType() == Material.COBBLESTONE){
             Material handMat = event.getPlayer().getInventory().getItemInMainHand().getType();
-            if (findProfile(uuid).triggerHistory[1] == 0 && (handMat == Material.STONE_PICKAXE
+            if (profile.triggerHistory[1] == 0 && (handMat == Material.STONE_PICKAXE
                     || handMat == Material.IRON_PICKAXE
                     || handMat == Material.GOLD_PICKAXE)){
                 event.getPlayer().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Primitive picks have a % chance to fail to break stone. Stone will break nearby rock into cobble, which is easier to break. Higher tier metal picks greatly improve mining speed, and mithril (diamond) picks have 100% success rates.");
-                findProfile(uuid).triggerHistory[1] = (byte)1; //eventually it will stop pestering you.
+                profile.triggerHistory[1] = (byte)1;
             }
         } else if (event.getBlock().getType() == Material.IRON_ORE //Ores: explain hiddenore, etc.
                     || event.getBlock().getType() == Material.GOLD_ORE
@@ -80,11 +80,9 @@ public class CivRealmsTutorialListener implements Listener {
                     || event.getBlock().getType() == Material.REDSTONE_ORE
                     || event.getBlock().getType() == Material.GLOWING_REDSTONE_ORE
                     || event.getBlock().getType() == Material.COAL_BLOCK){
-            //PlayerProfile profile = findProfile(uuid);
-            LOG.info("[TUTDEBUG] TH[1] = " + (findProfile(uuid).toString()));
-            if (findProfile(uuid).triggerHistory[2] == 0){
+            if (profile.triggerHistory[2] == 0){
                 event.getPlayer().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Ores appear as you mine; they are not pre-generated with the world. Some ores are more common in different parts of the world (by biome). Ores are also more common in the mining world, accessible through rare holes in the bedrock.");
-                findProfile(uuid).triggerHistory[2] = (byte)1; //eventually it will stop pestering you.
+                profile.triggerHistory[2] = (byte)1; 
             }
         }
     }
@@ -97,9 +95,9 @@ public class CivRealmsTutorialListener implements Listener {
                 if (event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
                     String uuid = event.getWhoClicked().getUniqueId().toString();
                     PlayerProfile profile = findProfile(uuid);
-                    if (profile.triggerHistory[3] == 0){ //up to 3 tutorial warnings (only happens when you don't use an axe)
+                    if (profile.triggerHistory[3] == 0){ 
                         event.getWhoClicked().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
-                        profile.triggerHistory[3] = (byte)1; //eventually it will stop pestering you.
+                        profile.triggerHistory[3] = 1; 
                     }
                 }
             }
