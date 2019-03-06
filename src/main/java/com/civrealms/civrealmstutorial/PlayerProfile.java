@@ -4,18 +4,20 @@
  */
 package com.civrealms.civrealmstutorial;
 
+import static com.civrealms.civrealmstutorial.CivRealmsTutorialListener.LOG;
+import java.util.logging.Logger;
+
 /**
  *
  * @author crimeo
  */
 
 public class PlayerProfile {
-    public byte[] triggerHistory;
-    public byte tutorialMode;
+    public byte[] triggerHistory = new byte[100];
+    public byte tutorialMode = 1;
+    public static Logger LOG = Logger.getLogger("CivRealmsPVE");
     
     public void PlayerProfile(){
-        tutorialMode = 1;
-        triggerHistory = new byte[100];
+        
     }
-    
 }
