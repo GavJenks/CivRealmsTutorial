@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.block.Block;
 import org.bukkit.Material;
 import org.bukkit.ChatColor;
@@ -98,6 +99,21 @@ public class CivRealmsTutorialListener implements Listener {
                     if (profile.triggerHistory[3] == 0){ 
                         event.getWhoClicked().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
                         profile.triggerHistory[3] = 1; 
+                    }
+                }
+            }
+        }
+    }
+        
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+	public void enterWater (PlayerMoveEvent event) {
+            if (Math.random() < 0.01){ //uuids and map lookups, etc. every move event is a lot and unnecessary here.
+		if (event.getPlayer().getLocation().getBlock().getType() == Material.STATIONARY_WATER){
+                    String uuid = event.getPlayer().getUniqueId().toString();
+                    PlayerProfile profile = findProfile(uuid);
+                    if (profile.triggerHistory[4] == 0){ 
+                        event.getPlayer().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Careful! You can drown in water if you carry more than a few full stacks of items in deep water and are too far out to crawl to shore along the bottom.");
+                        profile.triggerHistory[4] = 1; 
                     }
                 }
             }
