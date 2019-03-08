@@ -108,7 +108,7 @@ public class CivRealmsTutorialListener implements Listener {
 				|| event.getInventory().getType() == InventoryType.WORKBENCH) {
 			if (event.getSlotType() == InventoryType.SlotType.CRAFTING) {
                 if (event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
-                    basicTutorialMessage (5, (Player)event.getWhoClicked(), " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
+                    basicTutorialMessage (3, (Player)event.getWhoClicked(), " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
                 }
             }
         }
@@ -118,7 +118,7 @@ public class CivRealmsTutorialListener implements Listener {
     public void enterWater (PlayerMoveEvent event) {
         if (Math.random() < 0.01){ //uuids and map lookups, etc. every move event is a lot and unnecessary here.
             if (event.getPlayer().getLocation().getBlock().getType() == Material.STATIONARY_WATER){
-                basicTutorialMessage (5, event.getPlayer(), " Careful! You can drown in water if you carry more than a few full stacks of items in deep water and are too far out to crawl to shore along the bottom.");
+                basicTutorialMessage (4, event.getPlayer(), " Careful! You can drown in water if you carry more than a few full stacks of items in deep water and are too far out to crawl to shore along the bottom.");
             }
         }
     }
