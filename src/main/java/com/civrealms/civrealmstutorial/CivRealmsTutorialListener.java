@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.Material;
@@ -128,6 +129,11 @@ public class CivRealmsTutorialListener implements Listener {
         if (event.getBlock().getType() == Material.CHEST){
             basicTutorialMessage (5, event.getPlayer(), " Some blocks like chests and crafting benches are disguised as stone until a player walks within a few blocks of them. You can use this to hide chests from x-ray. You may also want to 'lock' chests or any other block to make them harder (not impossible) to break by using the plugin Citadel. See reddit.com/r/Civrealms/wiki/protecting_property for more info.");
         }
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void onFirstDeath (PlayerDeathEvent event) {
+        basicTutorialMessage (6, event.getEntity(), " Every time you die, you lose 1 'stamina'. You can check your level with '/stamina' When you run out, you are temp banned for 1 day or until a friend uses '/revive name' on you. You gain stamina once per day on login and by voting. If you have over 25 stamina and type '/stamina [#]', you can turn some into an edible item that can be traded.");
     }
     
 }
