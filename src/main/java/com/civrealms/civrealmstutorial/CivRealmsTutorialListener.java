@@ -17,7 +17,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.Material;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -44,6 +48,18 @@ public class CivRealmsTutorialListener implements Listener {
             return profiles.get(uuid);
         }
     }
+    
+    //Method to use for basic, one-off triggers. If doing something fancy like "5 THEN go quiet" or "every 10th time" just do inline instead.
+    private void basicTutorialMessage(int tutorialIndex, Player player, String mainText){
+        String uuid = player.getUniqueId().toString();
+        PlayerProfile profile = findProfile(uuid);
+        if (profile.triggerHistory[tutorialIndex] == 0){ 
+            player.sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + mainText);
+            profile.triggerHistory[tutorialIndex] = 1; 
+        }
+    }
+    
+    //--------------- TRIGGERS: -------------------------------
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onBlockBreak(BlockBreakEvent event){
@@ -92,16 +108,32 @@ public class CivRealmsTutorialListener implements Listener {
 		if (event.getInventory().getType() == InventoryType.CRAFTING
 				|| event.getInventory().getType() == InventoryType.WORKBENCH) {
 			if (event.getSlotType() == InventoryType.SlotType.CRAFTING) {
-                if (event.getInventory().getItem(event.getSlot()) != null && event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
-                    String uuid = event.getWhoClicked().getUniqueId().toString();
-                    PlayerProfile profile = findProfile(uuid);
-                    if (profile.triggerHistory[3] == 0){ 
-                        event.getWhoClicked().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
-                        profile.triggerHistory[3] = 1; 
-                    }
+                if (event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
+                    basicTutorialMessage (3, (Player)event.getWhoClicked(), " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
                 }
             }
         }
+    }
+        
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void enterWater (PlayerMoveEvent event) {
+        if (Math.random() < 0.01){ //uuids and map lookups, etc. every move event is a lot and unnecessary here.
+            if (event.getPlayer().getLocation().getBlock().getType() == Material.STATIONARY_WATER){
+                basicTutorialMessage (4, event.getPlayer(), " Careful! You can drown in water if you carry more than a few full stacks of items in deep water and are too far out to crawl to shore along the bottom.");
+            }
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void placeBlock (BlockPlaceEvent event) {
+        if (event.getBlock().getType() == Material.CHEST){
+            basicTutorialMessage (5, event.getPlayer(), " Some blocks like chests and crafting benches are disguised as stone until a player walks within a few blocks of them. You can use this to hide chests from x-ray. You may also want to 'lock' chests or any other block to make them harder (not impossible) to break by using the plugin Citadel. See reddit.com/r/Civrealms/wiki/protecting_property for more info.");
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void onFirstDeath (PlayerDeathEvent event) {
+        basicTutorialMessage (6, event.getEntity(), " Every time you die, you lose 1 'stamina'. You can check your level with '/stamina' When you run out, you are temp banned for 1 day or until a friend uses '/revive name' on you. You gain stamina once per day on login and by voting. If you have over 25 stamina and type '/stamina [#]', you can turn some into an edible item that can be traded.");
     }
     
 }
