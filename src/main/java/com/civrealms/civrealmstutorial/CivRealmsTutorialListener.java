@@ -92,7 +92,7 @@ public class CivRealmsTutorialListener implements Listener {
 		if (event.getInventory().getType() == InventoryType.CRAFTING
 				|| event.getInventory().getType() == InventoryType.WORKBENCH) {
 			if (event.getSlotType() == InventoryType.SlotType.CRAFTING) {
-                if (event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
+                if (event.getInventory().getItem(event.getSlot()) != null && event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
                     String uuid = event.getWhoClicked().getUniqueId().toString();
                     PlayerProfile profile = findProfile(uuid);
                     if (profile.triggerHistory[3] == 0){ 
