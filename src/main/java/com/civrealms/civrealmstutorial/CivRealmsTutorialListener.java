@@ -104,13 +104,25 @@ public class CivRealmsTutorialListener implements Listener {
     }
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
-	public void cobbleCraft(InventoryClickEvent event) {
-		if (event.getInventory().getType() == InventoryType.CRAFTING
-				|| event.getInventory().getType() == InventoryType.WORKBENCH) {
-			if (event.getSlotType() == InventoryType.SlotType.CRAFTING) {
-                if (event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ //trying to craft with cobblestone. Tell about tools and ovens.
+    public void onCraft(InventoryClickEvent event) {
+        if (event.getInventory().getType() == InventoryType.CRAFTING
+                        || event.getInventory().getType() == InventoryType.WORKBENCH) {
+            if (event.getSlotType() == InventoryType.SlotType.CRAFTING) {
+                if (event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){ 
                     basicTutorialMessage (3, (Player)event.getWhoClicked(), " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
                 }
+            else if(event.getSlotType() == InventoryType.SlotType.RESULT)
+                if (event.getInventory().getItem(event.getSlot()).getType() == Material.BIRCH_FENCE){ 
+                    basicTutorialMessage (7, (Player)event.getWhoClicked(), " Birch fences serve as scaffolding. While standing in the same block as the fence, look directly down to descend, or closer to upward to ascend. You can craft any fence into a birch fence, but not vice versa.");
+                } else if (event.getInventory().getItem(event.getSlot()).getType() == Material.STONE_SWORD){ 
+                    basicTutorialMessage (10, (Player)event.getWhoClicked(), " PVP has been rebalanced. See reddit.com/r/Civrealms/wiki/pvp for more info..");
+                }
+            }
+        } else if (event.getInventory().getType() == InventoryType.FURNACE) {
+            if (event.getInventory().getItem(event.getSlot()).getType() == Material.IRON_ORE || event.getInventory().getItem(event.getSlot()).getType() == Material.EMERALD_ORE || event.getInventory().getItem(event.getSlot()).getType() == Material.COAL_ORE){
+                basicTutorialMessage (8, (Player)event.getWhoClicked(), " Ores must be smelted in furnace factories, which can be expensive to maintain. It is not strictly necessary, but you are encourages to work in groups to run furnaces. See reddit.com/r/Civrealms/wiki/factorymod for more info.");
+            } else if (event.getInventory().getItem(event.getSlot()).getType() == Material.LOG || event.getInventory().getItem(event.getSlot()).getType() == Material.LOG_2 || event.getInventory().getItem(event.getSlot()).getType() == Material.COBBLESTONE){
+                basicTutorialMessage (9, (Player)event.getWhoClicked(), " Some items CAN be smelted or processed the vanilla way, but using factorymod is more efficient. See reddit.com/r/Civrealms/wiki/factorymod for more info.");
             }
         }
     }
