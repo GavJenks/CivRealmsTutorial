@@ -74,7 +74,7 @@ public class CivRealmsTutorialListener implements Listener {
                 if (profile.triggerHistory[0] < 3){ //up to 3 tutorial warnings (only happens when you don't use an axe)
                     event.getPlayer().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " You cannot break trees by hand. Make a primitive axe instead by using the regular minecraft axe recipe but with either bone or flint for the head of the axe. All animals drop bones.");
                     event.getPlayer().sendMessage("");
-                    event.getPlayer().sendMessage(ChatColor.BLUE + "You can get sticks for your tools by punching leaves. There are similar recipes for all other primitive tools.");
+                    event.getPlayer().sendMessage(ChatColor.BLUE + "You can get sticks for your tools by punching leaves, and you can make planks for a crafting bench by combining sticks. There are similar recipes for all other primitive tools.");
                     profile.triggerHistory[0] = (byte)Math.min(3,profile.triggerHistory[0] + 1); //eventually it will stop pestering you.
                 }
             }
@@ -112,7 +112,12 @@ public class CivRealmsTutorialListener implements Listener {
                     basicTutorialMessage (3, (Player)event.getWhoClicked(), " Ovens are made out of hardened clay (terracotta) instead of cobble. Primitive tools are made out of flint or bone instead of cobble.");
                 }
             else if(event.getSlotType() == InventoryType.SlotType.RESULT)
-                if (event.getInventory().getItem(event.getSlot()).getType() == Material.BIRCH_FENCE){ 
+                if (event.getInventory().getItem(event.getSlot()).getType() == Material.BIRCH_FENCE
+                        || event.getInventory().getItem(event.getSlot()).getType() == Material.FENCE
+                        || event.getInventory().getItem(event.getSlot()).getType() == Material.SPRUCE_FENCE
+                        || event.getInventory().getItem(event.getSlot()).getType() == Material.DARK_OAK_FENCE
+                        || event.getInventory().getItem(event.getSlot()).getType() == Material.ACACIA_FENCE
+                        || event.getInventory().getItem(event.getSlot()).getType() == Material.JUNGLE_FENCE){ 
                     basicTutorialMessage (7, (Player)event.getWhoClicked(), " Birch fences serve as scaffolding. While standing in the same block as the fence, look directly down to descend, or closer to upward to ascend. You can craft any fence into a birch fence, but not vice versa.");
                 } else if (event.getInventory().getItem(event.getSlot()).getType() == Material.STONE_SWORD){ 
                     basicTutorialMessage (10, (Player)event.getWhoClicked(), " PVP has been rebalanced. See reddit.com/r/Civrealms/wiki/pvp for more info..");
