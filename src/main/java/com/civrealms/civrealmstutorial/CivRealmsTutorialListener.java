@@ -105,6 +105,9 @@ public class CivRealmsTutorialListener implements Listener {
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onCraft(InventoryClickEvent event) {
+        if (event.getInventory().getItem(event.getSlot()) == null) {
+			return;
+		}
         if (event.getInventory().getType() == InventoryType.CRAFTING
                         || event.getInventory().getType() == InventoryType.WORKBENCH) {
             if (event.getSlotType() == InventoryType.SlotType.CRAFTING) {
