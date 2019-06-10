@@ -20,8 +20,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.Material;
 import org.bukkit.ChatColor;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -100,6 +100,8 @@ public class CivRealmsTutorialListener implements Listener {
                 event.getPlayer().sendMessage(ChatColor.AQUA + "TUTORIAL:" + ChatColor.BLUE + " Ores appear as you mine; they are not pre-generated with the world. Some ores are more common in different parts of the world (by biome). Ores are also more common in the mining world, accessible through rare holes in the bedrock.");
                 profile.triggerHistory[2] = (byte)1; 
             }
+        } else if (event.getBlock().getType() == Material.CROPS){
+            basicTutorialMessage (10, event.getPlayer(), " 1 wheat -> 1 bread in an oven, which is made with a ring of 8 terracotta on a crafting table.");
         }
     }
     
@@ -148,6 +150,13 @@ public class CivRealmsTutorialListener implements Listener {
     public void placeBlock (BlockPlaceEvent event) {
         if (event.getBlock().getType() == Material.CHEST){
             basicTutorialMessage (5, event.getPlayer(), " Some blocks like chests and crafting benches are disguised as stone until a player walks within a few blocks of them. You can use this to hide chests from x-ray. You may also want to 'lock' chests or any other block to make them harder (not impossible) to break by using the plugin Citadel. See reddit.com/r/Civrealms/wiki/protecting_property for more info.");
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    public void placeBlock (PlayerJoinEvent event) {
+        if (event.getPlayer().getWorld().getName().contains("prison_the_end")){
+            basicTutorialMessage (11, event.getPlayer(), " You have been imprisoned in an ender pearl. If somebody frees your pearl in the world you were captured in, you can be free again. Use /ffp to see where your pearl is at any moment. If it isn't anywhere, /ffp will release you instead.");
         }
     }
     
