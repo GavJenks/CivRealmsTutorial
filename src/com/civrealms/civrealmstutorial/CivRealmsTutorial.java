@@ -11,11 +11,8 @@ package com.civrealms.civrealmstutorial;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class CivRealmsTutorial extends JavaPlugin {
-    
-    public static Logger LOG = Logger.getLogger("CivRealmsPVE");
     
     // Fired when plugin is first enabled
     @Override

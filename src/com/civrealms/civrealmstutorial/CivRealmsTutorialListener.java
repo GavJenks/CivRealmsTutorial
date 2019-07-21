@@ -30,7 +30,7 @@ import org.bukkit.event.inventory.InventoryType;
 public class CivRealmsTutorialListener implements Listener {
     
     private CivRealmsTutorial plugin;
-    public static Logger LOG = Logger.getLogger("CivRealmsTutorial");
+    public static Logger LOG = Logger.getLogger("CivRealmsPVE");
     public HashMap<String,PlayerProfile> profiles = new HashMap<String,PlayerProfile>(); 
     
     public CivRealmsTutorialListener(CivRealmsTutorial plugin) {
@@ -63,7 +63,6 @@ public class CivRealmsTutorialListener implements Listener {
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onBlockBreak(BlockBreakEvent event){
-        //LOG.info("DEBUGTUTORIAL " + event.getBlock().getType().name());
         String uuid = event.getPlayer().getUniqueId().toString();
         PlayerProfile profile = findProfile(uuid);
         if (event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2){
@@ -102,8 +101,7 @@ public class CivRealmsTutorialListener implements Listener {
                 profile.triggerHistory[2] = (byte)1; 
             }
         } else if (event.getBlock().getType() == Material.CROPS){
-            basicTutorialMessage (11, event.getPlayer(), " 1 wheat -> 1 bread in an oven, which is made with a ring of 8 terracotta on a crafting table.");
-            basicTutorialMessage (13, event.getPlayer(), " By default, there is an auto-replant feature on this server. If you have the same seed as a crop in your hotbar, you will spend one to auto replant. You can toggle this with /togglereplant.");
+            basicTutorialMessage (10, event.getPlayer(), " 1 wheat -> 1 bread in an oven, which is made with a ring of 8 terracotta on a crafting table.");
         }
     }
     
@@ -162,7 +160,7 @@ public class CivRealmsTutorialListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void placeBlock (PlayerJoinEvent event) {
         if (event.getPlayer().getWorld().getName().contains("prison_the_end")){
-            basicTutorialMessage (12, event.getPlayer(), " You have been imprisoned in an ender pearl. If somebody frees your pearl in the world you were captured in, you can be free again. Use /ffp to see where your pearl is at any moment. If it isn't anywhere, /ffp will release you instead.");
+            basicTutorialMessage (11, event.getPlayer(), " You have been imprisoned in an ender pearl. If somebody frees your pearl in the world you were captured in, you can be free again. Use /ffp to see where your pearl is at any moment. If it isn't anywhere, /ffp will release you instead.");
         }
     }
     
