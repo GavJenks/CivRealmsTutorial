@@ -10,9 +10,12 @@
 		  <resource>
 			<directory>${basedir}</directory>
 			<includes>
-			  <include>*.yml</include>
+			  <include>plugin.yml</include>
 			</includes>
 			<filtering>true</filtering>
+                        <excludes>
+                            <exclude>./classes</exclude>
+                        </excludes>
 		  </resource>
 		</resources>
 		<plugins>

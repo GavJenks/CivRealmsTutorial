@@ -20,12 +20,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.Material;
 import org.bukkit.ChatColor;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 
 public class CivRealmsTutorialListener implements Listener {
     
@@ -102,9 +101,12 @@ public class CivRealmsTutorialListener implements Listener {
             }
         } else if (event.getBlock().getType() == Material.CROPS){
             basicTutorialMessage (10, event.getPlayer(), " 1 wheat -> 1 bread in an oven, which is made with a ring of 8 terracotta on a crafting table.");
+        } else if (event.getBlock().getType() == Material.CLAY && !event.getBlock().getWorld().getName().contains("aqua")){
+            basicTutorialMessage (13, event.getPlayer(), " Clay is purer and provides higher yields in the Aqua Nether.");
         }
     }
     
+    /*
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void onCraft(InventoryClickEvent event) {
         try{
@@ -140,6 +142,7 @@ public class CivRealmsTutorialListener implements Listener {
             //shhhh
         }
     }
+*/
         
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void enterWater (PlayerMoveEvent event) {
@@ -156,6 +159,11 @@ public class CivRealmsTutorialListener implements Listener {
             basicTutorialMessage (5, event.getPlayer(), " Some blocks like chests and crafting benches are disguised as stone until a player walks within a few blocks of them. You can use this to hide chests from x-ray. You may also want to 'lock' chests or any other block to make them harder (not impossible) to break by using the plugin Citadel. See reddit.com/r/Civrealms/wiki/protecting_property for more info.");
         }
     }
+    
+    //@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
+    //public void placeBlock (AsyncPlayerChatEvent event) {
+    //    basicTutorialMessage (12, event.getPlayer(), "  Only nearby players can hear you. Use '/tell', join the discord, or type '/nljg ! !' then '/gc !' to chat in an informal global chat group. '/gc' returns to normal.");
+    //}
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)
     public void placeBlock (PlayerJoinEvent event) {
